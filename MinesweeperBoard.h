@@ -4,38 +4,33 @@
 
 #ifndef SAPER_MINESWEEPERBOARD_H
 #define SAPER_MINESWEEPERBOARD_H
+
 #include <string>
 
-struct Field
-{
+struct Field {
     bool hasMine;
     bool hasFlag;
     bool isRevealed;
 };
 
-class MinesweeperBoard
-{
+enum GameMode { DEBUG, EASY, NORMAL, HARD };
 
-    // wybierz jedno z poniższych
-
-    // sugerowane:
-    // Array2D<Field> board;
-
+class MinesweeperBoard {
     // tablica 2D
     Field board[100][100];
-
-    // wektor wektorów
-    // std::vector<std::vector<Field>> board;
-
-    // niezbędne jeśli użyjecie tablicy 2D, ale w każdym
-    // przypadku wygodne
-    int width;                // rzeczywista szerokość planszy
-    int height;               // rzeczywista wysokość planszy
-    int difficulty_level;     // poziom trudności rozgrywki
+    int columns=5;                // rzeczywista szerokość planszy
+    int rows=7;               // rzeczywista wysokość planszy
+    GameMode mode;
+    int totalFields;
+    int minedFields;
     void clearBoard();
     void setTest();
+    void generateDebugMines();
+    void generateRandomMines();
+
 public:
     MinesweeperBoard();
+    MinesweeperBoard(int width, int height, GameMode mode);
     void debug_display() const;
 };
 

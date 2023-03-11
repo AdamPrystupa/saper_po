@@ -1,8 +1,9 @@
-#include <iostream>
+
 #include "MinesweeperBoard.h"
 
 int main() {
     MinesweeperBoard board;
-    board.debug_display();
+    MinesweeperBoard board1(5,7,GameMode::HARD);
+    board1.debug_display();
     return 0;
 }
