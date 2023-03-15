@@ -3,7 +3,8 @@
 
 int main() {
     MinesweeperBoard board;
-    MinesweeperBoard board1(5,7,GameMode::HARD);
+    MinesweeperBoard board1(10,10,GameMode::DEBUG);
+
     board1.debug_display();
     return 0;
 }
