@@ -7,13 +7,13 @@
 
 #include <string>
 
+
+enum GameState { RUNNING, FINISHED_WIN, FINISHED_LOSS };
 enum GameMode { DEBUG, EASY, NORMAL, HARD };
 // - EASY   - 10% of game fields with mines (random)
 // - NORMAL - 20% of game fields with mines (random)
 // - HARD   - 30% of game fields with mines (random)
 // - DEBUG  - predefined mine layout (read at the end of file)
-
-enum GameState { RUNNING, FINISHED_WIN, FINISHED_LOSS };
 
 
 
@@ -31,12 +31,15 @@ class MinesweeperBoard {
     int width;                // rzeczywista szerokość planszy
     int height;               // rzeczywista wysokość planszy
     GameMode mode;
+    GameState state;
     int totalFields;
     int mineCount;
+    int moveCount;
     void clearBoard();
     void setTest();
     void generateDebugMines();
     void generateRandomMines();
+    void moveMine(int row, int col);
     bool belongToBoard(int row, int col) const;
 
 public:
@@ -47,6 +50,12 @@ public:
     int getBoardHeight() const;
     int getMineCount() const;
     int countMines(int row, int col) const;
+    bool hasFlag(int row, int col) const;
+    void toggleFlag(int row, int col);
+    void revealField(int row, int col);
+    bool isRevealed(int row, int col) const;
+    GameState getGameState() const;
+    char getFieldInfo(int row, int col) const;
 };
 
 
