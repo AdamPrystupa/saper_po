@@ -24,7 +24,7 @@ void MSBoardTextView::display() const {
     cout<<endl;
     for (int row = 0; row < board.getBoardHeight(); row++) {
         if(row+1<10)
-        cout<<" "<<row+1<<"  |";
+            cout<<" "<<row+1<<"  |";
         else
             cout<<row+1<<"  |";
         for (int col = 0; col < board.getBoardWidth(); col++) {
