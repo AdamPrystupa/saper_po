@@ -28,11 +28,10 @@ struct Field {
 class MinesweeperBoard {
     // tablica 2D
     Field board[100][100];
-    int width;                // rzeczywista szerokość planszy
-    int height;               // rzeczywista wysokość planszy
+    int width;                // the actual width of the board
+    int height;               // the actual height of the board
     GameMode mode;
     GameState state;
-    int totalFields;
     int mineCount;
     int moveCount;
     void clearBoard();
@@ -43,6 +42,7 @@ class MinesweeperBoard {
     bool belongToBoard(int row, int col) const;
 
 public:
+    int totalFields;
     MinesweeperBoard();
     MinesweeperBoard(int width, int height, GameMode mode);
     void debug_display() const;
@@ -51,11 +51,14 @@ public:
     int getMineCount() const;
     int countMines(int row, int col) const;
     bool hasFlag(int row, int col) const;
+    bool hasMine(int row, int col) const;
     void toggleFlag(int row, int col);
     void revealField(int row, int col);
     bool isRevealed(int row, int col) const;
     GameState getGameState() const;
     char getFieldInfo(int row, int col) const;
+
+
 };
 
 

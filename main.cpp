@@ -1,10 +1,17 @@
 
 #include "MinesweeperBoard.h"
+#include "MSBoardTextView.h"
+#include "MSTextController.h"
 
 int main() {
-    MinesweeperBoard board;
-    MinesweeperBoard board1(10,10,GameMode::DEBUG);
 
-    board1.debug_display();
+        MinesweeperBoard board (5, 5, GameMode::NORMAL);
+        MSBoardTextView view (board);
+        MSTextController ctrl (board,view);
+        board.debug_display();
+        board.getGameState();
+
+        ctrl.play();
+
     return 0;
 }
