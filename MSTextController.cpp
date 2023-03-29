@@ -18,19 +18,19 @@ MSTextController::MSTextController(MinesweeperBoard &board, MSBoardTextView &vie
 
 void MSTextController::play() {
     view.display();
-    while(board.getGameState()==RUNNING) {
+    while (board.getGameState() == RUNNING) {
         int chose;
         int row;
         int column;
         cout << "Make a move!" << endl;
         cout << "1 (row column) - Reveal field" << endl;
         cout << "2 (row column) - Toggle flag" << endl;
-        if (!(cin >> chose >> row >> column) || chose < 1 || chose > 2 || row < 1 || row > board.getBoardHeight() || column < 1 || column > board.getBoardWidth()) {
+        if (!(cin >> chose >> row >> column) || chose < 1 || chose > 2 || row < 1 || row > board.getBoardHeight() ||
+            column < 1 || column > board.getBoardWidth()) {
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cout << "Invalid input. Enter correct values." << endl;
-        }
-        else {
+        } else {
             row--;
             column--;
 
@@ -49,16 +49,17 @@ void MSTextController::play() {
                     break;
                 }
             }
-        }
-
-
-            view.display();
-            if (board.getGameState() == FINISHED_LOSS)
-                cout << "GAME OVER" << endl;
 
         }
+
+        view.display();
+        if (board.getGameState() == FINISHED_LOSS)
+            cout << "GAME OVER" << endl;
+
+
         if (board.getGameState() == FINISHED_WIN)
             cout << "CONGRATULATIONS" << endl;
     }
 
 
+}

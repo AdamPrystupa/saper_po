@@ -31,6 +31,7 @@ MinesweeperBoard::MinesweeperBoard(int width, int height, GameMode mode){
     } else {
         MinesweeperBoard::generateRandomMines();
     }
+    this->state=RUNNING;
 
 }
 
@@ -225,12 +226,10 @@ bool MinesweeperBoard::hasMine(int row, int col) const
 void MinesweeperBoard::toggleFlag(int row, int col)
 {
     moveCount++;
-    if(!belongToBoard(row,col))
-        return;
-    if(isRevealed(row,col))
-        return;
-    if(this->state!=RUNNING)
-        return;
+    if(!belongToBoard(row,col)) return;
+    if(isRevealed(row,col)) return;
+    if(this->state!=RUNNING) return;
+
     if(!isRevealed(row,col)) {
         if (board[row][col].hasFlag)
             board[row][col].hasFlag = false;
@@ -253,12 +252,12 @@ void MinesweeperBoard::toggleFlag(int row, int col)
 // - if its the first player action - move mine to another location, reveal field (recursion) (not in DEBUG mode!)
 // - reveal (recursion) it and finish game
 void MinesweeperBoard::revealField(int row, int col) {
+
     moveCount++;
     if (!belongToBoard(row, col)) return;
     if (isRevealed(row, col)) return;
     if (board[row][col].hasFlag) return;
     if (this->state != RUNNING) return;
-
     if (board[row][col].hasMine) {
         if (mode == DEBUG) {
             board[row][col].isRevealed = true;

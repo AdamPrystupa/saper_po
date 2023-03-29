@@ -48,7 +48,6 @@
 
 # AWS User-specific
 .idea/**/aws.xml
-
 # Generated files
 .idea/**/contentModel.xml
 
@@ -60,6 +59,7 @@
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+.idea/*
 
 # Gradle
 .idea/**/gradle.xml
