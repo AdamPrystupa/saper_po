@@ -2,9 +2,7 @@
 // Created by Adam on 24.03.2023.
 //
 #include <iostream>
-#include <cstdlib>
 #include <chrono>
-#include <thread>
 
 #include "MSTextController.h"
 #include "MSBoardTextView.h"
