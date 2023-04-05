@@ -8,7 +8,7 @@ int main() {
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(30);
 
-    MinesweeperBoard board(7, 4, DEBUG);
+    MinesweeperBoard board(16, 12, DEBUG);
     MSSFMLView view (board);  // przekazujemy przez referencję planszę jako argument konstruktora
 
     // symulujemy rozgrywkę
@@ -22,7 +22,7 @@ int main() {
                 window.close();
         }
 
-        window.clear();
+        window.clear(sf::Color(166, 161, 161));
         view.draw(window);
         window.display();
     }
