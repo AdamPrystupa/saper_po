@@ -36,5 +36,5 @@ endif(WIN32)
 
 find_package(SFML 2 COMPONENTS graphics audio REQUIRED)
 
-add_executable(saper main.cpp MinesweeperBoard.cpp MinesweeperBoard.h MSBoardTextView.cpp MSBoardTextView.h MSTextController.cpp MSTextController.h MSSFMLView.cpp MSSFMLView.h Array2D.cpp Array2D.h)
+add_executable(saper main.cpp MinesweeperBoard.cpp MinesweeperBoard.h MSBoardTextView.cpp MSBoardTextView.h MSTextController.cpp MSTextController.h MSSFMLView.cpp MSSFMLView.h Array2D.cpp Array2D.h MSSFMLController.cpp MSSFMLController.h)
 target_link_libraries(saper sfml-graphics sfml-audio)

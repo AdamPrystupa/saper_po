@@ -1,26 +1,17 @@
-#include <SFML/Graphics.hpp>
+//
+// Created by Adam on 06.04.2023.
+//
+
+#include "MSSFMLController.h"
 #include "MinesweeperBoard.h"
 #include "MSSFMLView.h"
 
-int main() {
+MSSFMLController::MSSFMLController(MinesweeperBoard &board, MSSFMLView &view) : board(board), view(view) {}
 
+void MSSFMLController::play() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Grafika w C++/SFML");
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(30);
-
-    MinesweeperBoard board(10, 10, DEBUG);
-    MSSFMLView view (board);  // przekazujemy przez referencję planszę jako argument konstruktora
-
-    // symulujemy rozgrywkę
-    board.toggleFlag(0, 0);
-    board.revealField(1,2);
-    board.revealField(3,0);
-    board.revealField(2, 3);
-    board.revealField(1,0);
-    board.revealField(0,1);
-
-
-
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -33,5 +24,4 @@ int main() {
         window.display();
     }
 
-    return 0;
 }
