@@ -8,20 +8,24 @@
 
 MSSFMLController::MSSFMLController(MinesweeperBoard &board, MSSFMLView &view) : board(board), view(view) {}
 
-void MSSFMLController::play() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Grafika w C++/SFML");
-    window.setVerticalSyncEnabled(false);
-    window.setFramerateLimit(30);
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
+void MSSFMLController::handleEvent(sf::RenderWindow &window,sf::Event &event) {
+    while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed)
+            window.close();
+        {
+            if (event.type == sf::Event::MouseButtonPressed)
+                if(event.type==sf::Event::MouseButtonPressed)
+                {
+                    if(event.mouseButton.button==sf::Mouse::Left)
+                        board.revealField((event.mouseButton.y-view.getY0())/view.getSideLength(),(event.mouseButton.x-view.getX0())/view.getSideLength());
+                    if(event.mouseButton.button==sf::Mouse::Right)
+                        board.toggleFlag((event.mouseButton.y-view.getY0())/view.getSideLength(),(event.mouseButton.x-view.getX0())/view.getSideLength());
+
+                }
         }
 
-        window.clear(sf::Color(166, 161, 161));
-        view.draw(window);
-        window.display();
     }
-
+    window.clear(sf::Color(166, 161, 161));
+    view.draw(window);
+    window.display();
 }

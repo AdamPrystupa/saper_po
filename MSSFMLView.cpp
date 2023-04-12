@@ -7,53 +7,60 @@
 #include <iostream>
 #include <stdlib.h>
 
-MSSFMLView::MSSFMLView(MinesweeperBoard &board) : board (board){};
+MSSFMLView::MSSFMLView(MinesweeperBoard &board) : board (board){
+    this->sideLength=40;
+    this->x0=(800 - float(board.getBoardWidth() * sideLength)) / 2;
+    this->y0=(600 - float(board.getBoardHeight() * sideLength)) / 2;
+
+};
 
 void MSSFMLView::draw(sf::RenderTarget &target) const {
     float xPosition;
     float yPosition;
     float rectangleSize;
-    rectangleSize=25;
-    xPosition=(800-float(board.getBoardWidth()*rectangleSize))/2;
-    yPosition=(600-float(board.getBoardHeight()*rectangleSize))/2;
+    rectangleSize=sideLength;
+    xPosition = x0;
+    yPosition = y0;
 
     sf::Texture bombTexture;
-    if(!bombTexture.loadFromFile("C:\\Users\\pryst\\Desktop\\git\\saper_adam_prystupa\\images\\bomb.png")){
+    if (!bombTexture.loadFromFile("..\\images\\bomb.png")) {
         return;
     }
     bombTexture.setSmooth(true);
 
     sf::Texture unrevealedTexture;
 
-    if(!unrevealedTexture.loadFromFile("C:\\Users\\pryst\\Desktop\\git\\saper_adam_prystupa\\images\\unrevealed.png")){
+    if (!unrevealedTexture.loadFromFile(
+            "..\\images\\unrevealed.png")) {
         return;
     }
     unrevealedTexture.setSmooth(true);
 
     sf::Texture flagTexture;
-    if(!flagTexture.loadFromFile("C:\\Users\\pryst\\Desktop\\git\\saper_adam_prystupa\\images\\flag.png")){
+    if (!flagTexture.loadFromFile("..\\images\\flag.png")) {
         return;
     }
     flagTexture.setSmooth(true);
 
     sf::Font font;
-    if(!font.loadFromFile("C:\\Users\\pryst\\Desktop\\git\\saper_adam_prystupa\\fonts\\font.otf")){
+    if (!font.loadFromFile("..\\fonts\\font.otf")) {
         return;
     }
 
 
-    for (int row=0; row<board.getBoardHeight();row++) {
+    for (int row = 0; row < board.getBoardHeight(); row++) {
 
-        for (int col=0;col<board.getBoardWidth();col++) {
+        for (int col = 0; col < board.getBoardWidth(); col++) {
 
-            sf::RectangleShape rectangle (sf::Vector2f(rectangleSize,rectangleSize));
+            sf::RectangleShape rectangle(sf::Vector2f(rectangleSize, rectangleSize));
             rectangle.setOutlineThickness(1.f);
-            rectangle.setOutlineColor(sf::Color(40,40,40));
-            rectangle.setPosition(xPosition+(col*rectangleSize), yPosition);
+            rectangle.setOutlineColor(sf::Color(40, 40, 40));
+            rectangle.setPosition(xPosition + (col * rectangleSize), yPosition);
 
-            std::string mines="";
-            sf::Text minesNearly(mines, font, 22);
-
+            std::string mines = "";
+            sf::Text minesNearly(mines, font, getSideLength()/1.3);
+            minesNearly.setOutlineColor(sf::Color::Black);
+            minesNearly.setOutlineThickness(1);
 
 
             char fieldStatus = board.getFieldInfo(row, col);
@@ -74,7 +81,7 @@ void MSSFMLView::draw(sf::RenderTarget &target) const {
                 }
 
                 case ' ': {
-                    rectangle.setFillColor(sf::Color(171, 171, 171));
+                    rectangle.setFillColor(sf::Color(196, 196,196));
                     break;
 
                 }
@@ -82,32 +89,31 @@ void MSSFMLView::draw(sf::RenderTarget &target) const {
                 default: {
 
 
-                        rectangle.setFillColor(sf::Color(171, 171, 171));
-                        minesNearly.setPosition(rectangle.getPosition().x+3, rectangle.getPosition().y-2);
-                        mines = std::to_string(board.countMines(row, col));
-                        minesNearly.setString(mines);
-                        if (mines == "1") {
-                            minesNearly.setFillColor(sf::Color(28, 31, 128));
-                            break;
-                        }
-                        if (mines == "2") {minesNearly.setFillColor(sf::Color(27, 133, 30));
-                            break;
-                        }
-                        if (mines == "3") {
-                            minesNearly.setFillColor(sf::Color(219, 214, 480));
-                            break;
-                        }
-                        if (mines == "4") {
-                                           minesNearly.setFillColor(sf::Color(245, 158, 44));
-                            break;
-                        }
-                        if (mines == "5") {
-                            minesNearly.setFillColor(sf::Color(252, 3, 11));
-                            break;
-                        } else
-                            minesNearly.setFillColor(sf::Color(128, 0, 4));
-
-
+                    rectangle.setFillColor(sf::Color(196,196,196));
+                    minesNearly.setPosition(rectangle.getPosition().x + getSideLength()/5, rectangle.getPosition().y /*getSideLength()/12.5*/);
+                    mines = std::to_string(board.countMines(row, col));
+                    minesNearly.setString(mines);
+                    if (mines == "1") {
+                        minesNearly.setFillColor(sf::Color(28, 31, 128));
+                        break;
+                    }
+                    if (mines == "2") {
+                        minesNearly.setFillColor(sf::Color(27, 133, 30));
+                        break;
+                    }
+                    if (mines == "3") {
+                        minesNearly.setFillColor(sf::Color(244, 252, 3));
+                        break;
+                    }
+                    if (mines == "4") {
+                        minesNearly.setFillColor(sf::Color(245, 158, 44));
+                        break;
+                    }
+                    if (mines == "5") {
+                        minesNearly.setFillColor(sf::Color(252, 3, 11));
+                        break;
+                    } else
+                        minesNearly.setFillColor(sf::Color(128, 0, 4));
 
 
                     break;
@@ -119,7 +125,18 @@ void MSSFMLView::draw(sf::RenderTarget &target) const {
 
 
         }
-        yPosition+=rectangleSize;
+        yPosition += rectangleSize;
     }
     return;
+}
+
+float MSSFMLView::getX0() const
+{
+    return this->x0;
+}
+float MSSFMLView::getY0() const {
+    return this->y0;
+}
+float MSSFMLView::getSideLength() const {
+    return this->sideLength;
 }

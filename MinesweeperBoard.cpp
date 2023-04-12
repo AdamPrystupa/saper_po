@@ -151,9 +151,9 @@ int MinesweeperBoard::getMineCount() const
 //function checks whether the field belongs to the game board
 bool MinesweeperBoard::belongToBoard(int row, int col) const
 {
-    if(col<0 || col>=width)
+    if(col<0 || col>=getBoardWidth())
         return false;
-    if(row<0 || row>=height)
+    if(row<0 || row>=getBoardHeight())
         return false;
 
     return true;
@@ -171,7 +171,7 @@ bool MinesweeperBoard::belongToBoard(int row, int col) const
 int MinesweeperBoard::countMines(int row, int col) const
 {
     int minesNearby=0;
-    if(!isRevealed(row,col))
+    if(!isRevealed(row, col))
         return -1;
     if(!belongToBoard(row,col))
         return -1;
@@ -179,7 +179,7 @@ int MinesweeperBoard::countMines(int row, int col) const
     {
         for(int columns=col-1;columns<=col+1;columns++)
         {
-            if (belongToBoard(columns,rows))
+            if (belongToBoard(rows,columns))
             {
                 if (board[rows][columns].hasMine)
                     minesNearby++;
@@ -187,7 +187,6 @@ int MinesweeperBoard::countMines(int row, int col) const
             }
         }
     }
-
     return minesNearby;
 }
 

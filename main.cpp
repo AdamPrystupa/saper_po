@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "MinesweeperBoard.h"
 #include "MSSFMLView.h"
+#include "MSSFMLController.h"
+
 
 int main() {
 
@@ -8,30 +10,17 @@ int main() {
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(30);
 
-    MinesweeperBoard board(10, 10, DEBUG);
+    MinesweeperBoard board(10,12,EASY);
     MSSFMLView view (board);  // przekazujemy przez referencję planszę jako argument konstruktora
-
-    // symulujemy rozgrywkę
-    board.toggleFlag(0, 0);
-    board.revealField(1,2);
-    board.revealField(3,0);
-    board.revealField(2, 3);
-    board.revealField(1,0);
-    board.revealField(0,1);
-
+    MSSFMLController ctrl (board,view);
 
 
     while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
+        ctrl.handleEvent(window,event);
         }
 
-        window.clear(sf::Color(166, 161, 161));
-        view.draw(window);
-        window.display();
-    }
 
     return 0;
 }
+
