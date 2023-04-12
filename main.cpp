@@ -17,10 +17,8 @@ int main() {
 
     while (window.isOpen()) {
         sf::Event event;
-        ctrl.handleEvent(window,event);
+        ctrl.play(window,event);
         }
-
-
     return 0;
 }
 

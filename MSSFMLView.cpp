@@ -4,8 +4,6 @@
 
 #include "MSSFMLView.h"
 #include "MinesweeperBoard.h"
-#include <iostream>
-#include <stdlib.h>
 
 MSSFMLView::MSSFMLView(MinesweeperBoard &board) : board (board){
     this->sideLength=40;

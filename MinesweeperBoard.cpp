@@ -97,16 +97,15 @@ void MinesweeperBoard::generateRandomMines(){
     int row;
     int column;
 
-    std::mt19937 generator(std::random_device{}());
-    std::uniform_int_distribution<int> dist(0, 9999);
+
 
     mineCount=std::ceil(totalFields*mode/10.0);
 
     for(int tmp=0;tmp<mineCount;tmp++)
     {
         do {
-            row= dist(generator) % height ;
-            column= dist(generator) % width ;
+            row= std::rand() % height ;
+            column= std::rand() % width ;
         } while (board[row][column].hasMine);
         board[row][column].hasMine= true;
 
@@ -117,13 +116,11 @@ void MinesweeperBoard::generateRandomMines(){
 void MinesweeperBoard::moveMine(int row, int col)
 {
     if(!moveCount>1);
-    std::mt19937 generator(std::random_device{}());
-    std::uniform_int_distribution<int> dist(0, 9999);
     int rows;
     int columns;
     do {
-        rows= dist(generator) % height ;
-        columns= dist(generator) % width ;
+        rows= std::rand() % height ;
+        columns= std::rand() % width ;
     } while (board[rows][columns].hasMine);
     board[rows][columns].hasMine= true;
     board[row][col].hasMine=false;

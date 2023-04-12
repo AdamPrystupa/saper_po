@@ -8,8 +8,9 @@
 
 MSSFMLController::MSSFMLController(MinesweeperBoard &board, MSSFMLView &view) : board(board), view(view) {}
 
-void MSSFMLController::handleEvent(sf::RenderWindow &window,sf::Event &event) {
-    while (window.pollEvent(event)) {
+void MSSFMLController::play(sf::RenderWindow &window,sf::Event &event) {
+    while (window.pollEvent(event))
+    {
         if (event.type == sf::Event::Closed)
             window.close();
         {
@@ -23,7 +24,6 @@ void MSSFMLController::handleEvent(sf::RenderWindow &window,sf::Event &event) {
 
                 }
         }
-
     }
     window.clear(sf::Color(166, 161, 161));
     view.draw(window);
