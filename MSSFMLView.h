@@ -10,15 +10,33 @@
 
 class MSSFMLView {
     MinesweeperBoard &board;
-    float x0;
-    float y0;
+    float xBegining;
+    float yBegining;
     float sideLength;
+    float xPosition;
+    float yPosition;
+    sf::RectangleShape *rectangle;
+    sf::Text *minesNearly;
+    sf::Texture bombTexture;
+    sf::Texture unrevealedTexture;
+    sf::Texture flagTexture;
+    sf::Font font;
+
+
+    void matchFontColor(sf::Text &minesNearly, sf::RectangleShape &rectangle,int row, int col);
+    void setFieldsAppearance(int row,int col);
+    void rectangleInit(int col);
+    void minesNearlyInit();
+    void loadTextures();
+    void loadFonts();
+    void drawBoard(sf::RenderTarget & window);
+
 
 public:
     MSSFMLView(MinesweeperBoard &board);
-    void draw (sf::RenderTarget & window) const;
-    float getX0() const;
-    float getY0() const;
+    void draw (sf::RenderTarget & window);
+    float getXBeginig() const;
+    float getYBegining() const;
     float getSideLength() const;
 
 };

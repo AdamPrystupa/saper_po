@@ -7,26 +7,84 @@
 
 MSSFMLView::MSSFMLView(MinesweeperBoard &board) : board (board){
     this->sideLength=40;
-    this->x0=(800 - float(board.getBoardWidth() * sideLength)) / 2;
-    this->y0=(600 - float(board.getBoardHeight() * sideLength)) / 2;
+    this->xBegining=(800 - float(board.getBoardWidth() * sideLength)) / 2;
+    this->yBegining=(600 - float(board.getBoardHeight() * sideLength)) / 2;
 
 };
 
-void MSSFMLView::draw(sf::RenderTarget &target) const {
-    float xPosition;
-    float yPosition;
-    float rectangleSize;
-    rectangleSize=sideLength;
-    xPosition = x0;
-    yPosition = y0;
+void MSSFMLView::draw(sf::RenderTarget &target) {
+    xPosition = xBegining;
+    yPosition = yBegining;
 
-    sf::Texture bombTexture;
+    loadTextures();
+    loadFonts();
+
+    drawBoard(target);
+
+        return;
+    }
+
+
+
+
+
+float MSSFMLView::getXBeginig() const
+{
+    return this->xBegining;
+}
+
+
+float MSSFMLView::getYBegining() const {
+    return this->yBegining;
+}
+
+
+
+float MSSFMLView::getSideLength() const {
+    return this->sideLength;
+}
+
+
+
+
+void MSSFMLView::matchFontColor(sf::Text &minesNearly, sf::RectangleShape &rectangle,int row, int col) {
+    std::string mines = "";
+    rectangle.setFillColor(sf::Color(196,196,196));
+    minesNearly.setPosition(rectangle.getPosition().x + getSideLength()/5, rectangle.getPosition().y /*getSideLength()/12.5*/);
+    mines = std::to_string(board.countMines(row, col));
+    minesNearly.setString(mines);
+    if (mines == "1") {
+        minesNearly.setFillColor(sf::Color(28, 31, 128));
+        return;
+    }
+    if (mines == "2") {
+        minesNearly.setFillColor(sf::Color(27, 133, 30));
+        return;
+    }
+    if (mines == "3") {
+        minesNearly.setFillColor(sf::Color(244, 252, 3));
+        return;
+    }
+    if (mines == "4") {
+        minesNearly.setFillColor(sf::Color(245, 158, 44));
+        return;
+    }
+    if (mines == "5") {
+        minesNearly.setFillColor(sf::Color(252, 3, 11));
+        return;
+    } else
+        minesNearly.setFillColor(sf::Color(128, 0, 4));
+    return;
+}
+
+
+
+
+void MSSFMLView::loadTextures() {
     if (!bombTexture.loadFromFile("..\\images\\bomb.png")) {
         return;
     }
     bombTexture.setSmooth(true);
-
-    sf::Texture unrevealedTexture;
 
     if (!unrevealedTexture.loadFromFile(
             "..\\images\\unrevealed.png")) {
@@ -34,107 +92,83 @@ void MSSFMLView::draw(sf::RenderTarget &target) const {
     }
     unrevealedTexture.setSmooth(true);
 
-    sf::Texture flagTexture;
     if (!flagTexture.loadFromFile("..\\images\\flag.png")) {
+
         return;
     }
     flagTexture.setSmooth(true);
+}
 
-    sf::Font font;
+
+
+
+void MSSFMLView::loadFonts(){
     if (!font.loadFromFile("..\\fonts\\font.otf")) {
         return;
     }
+}
 
 
+
+
+void MSSFMLView::rectangleInit(int col) {
+    rectangle = new sf::RectangleShape(sf::Vector2f(sideLength, sideLength));
+    rectangle->setOutlineThickness(1.f);
+    rectangle->setOutlineColor(sf::Color(40, 40, 40));
+    rectangle->setPosition(xPosition + (col * sideLength), yPosition);
+}
+
+
+
+void MSSFMLView::minesNearlyInit() {
+    minesNearly = new sf::Text("", font, getSideLength() / 1.3);
+    minesNearly->setOutlineColor(sf::Color::Black);
+    minesNearly->setOutlineThickness(1);
+}
+
+void MSSFMLView::setFieldsAppearance(int row,int col) {
+    char fieldStatus = board.getFieldInfo(row, col);
+    switch (fieldStatus) {
+        case '_': {
+            rectangle->setTexture(&unrevealedTexture);
+            return;
+        }
+        case 'F': {
+            rectangle->setTexture(&flagTexture);
+            return;
+        }
+        case 'x': {
+            rectangle->setTexture(&bombTexture);
+            return;
+        }
+        case ' ': {
+            rectangle->setFillColor(sf::Color(196, 196, 196));
+            return;
+
+        }
+        default: {
+            matchFontColor(*minesNearly, *rectangle, row, col);
+
+            return;
+        }
+    }
+}
+
+void MSSFMLView::drawBoard(sf::RenderTarget & target) {
     for (int row = 0; row < board.getBoardHeight(); row++) {
 
         for (int col = 0; col < board.getBoardWidth(); col++) {
 
-            sf::RectangleShape rectangle(sf::Vector2f(rectangleSize, rectangleSize));
-            rectangle.setOutlineThickness(1.f);
-            rectangle.setOutlineColor(sf::Color(40, 40, 40));
-            rectangle.setPosition(xPosition + (col * rectangleSize), yPosition);
+            rectangleInit(col);
+            minesNearlyInit();
 
-            std::string mines = "";
-            sf::Text minesNearly(mines, font, getSideLength()/1.3);
-            minesNearly.setOutlineColor(sf::Color::Black);
-            minesNearly.setOutlineThickness(1);
+            setFieldsAppearance(row, col);
 
-
-            char fieldStatus = board.getFieldInfo(row, col);
-
-            switch (fieldStatus) {
-                case '_': {
-                    rectangle.setTexture(&unrevealedTexture);
-                    break;
-                }
-                case 'F': {
-                    rectangle.setTexture(&flagTexture);
-                    break;
-                }
-
-                case 'x': {
-                    rectangle.setTexture(&bombTexture);
-                    break;
-                }
-
-                case ' ': {
-                    rectangle.setFillColor(sf::Color(196, 196,196));
-                    break;
-
-                }
-
-                default: {
-
-
-                    rectangle.setFillColor(sf::Color(196,196,196));
-                    minesNearly.setPosition(rectangle.getPosition().x + getSideLength()/5, rectangle.getPosition().y /*getSideLength()/12.5*/);
-                    mines = std::to_string(board.countMines(row, col));
-                    minesNearly.setString(mines);
-                    if (mines == "1") {
-                        minesNearly.setFillColor(sf::Color(28, 31, 128));
-                        break;
-                    }
-                    if (mines == "2") {
-                        minesNearly.setFillColor(sf::Color(27, 133, 30));
-                        break;
-                    }
-                    if (mines == "3") {
-                        minesNearly.setFillColor(sf::Color(244, 252, 3));
-                        break;
-                    }
-                    if (mines == "4") {
-                        minesNearly.setFillColor(sf::Color(245, 158, 44));
-                        break;
-                    }
-                    if (mines == "5") {
-                        minesNearly.setFillColor(sf::Color(252, 3, 11));
-                        break;
-                    } else
-                        minesNearly.setFillColor(sf::Color(128, 0, 4));
-
-
-                    break;
-                }
-
-            }
-            target.draw(rectangle);
-            target.draw(minesNearly);
+            target.draw(*rectangle);
+            target.draw(*minesNearly);
 
 
         }
-        yPosition += rectangleSize;
+        yPosition += sideLength;
     }
-    return;
-}
-
-float MSSFMLView::getX0() const
-{
-    return this->x0;
-}
-float MSSFMLView::getY0() const {
-    return this->y0;
-}
-float MSSFMLView::getSideLength() const {
-    return this->sideLength;
 }
