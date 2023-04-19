@@ -10,7 +10,8 @@ int main() {
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(30);
 
-    MinesweeperBoard board(16,12,EASY);
+
+    MinesweeperBoard board(10,10,EASY);
     MSSFMLView view (board);  // przekazujemy przez referencję planszę jako argument konstruktora
     MSSFMLController ctrl (board,view);
 

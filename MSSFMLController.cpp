@@ -16,15 +16,29 @@ void MSSFMLController::play(sf::RenderWindow &window,sf::Event &event) {
             if (event.type == sf::Event::MouseButtonPressed)
                 if(event.type==sf::Event::MouseButtonPressed)
                 {
-                    if(event.mouseButton.button==sf::Mouse::Left)
-                        board.revealField((event.mouseButton.y-view.getYBegining())/view.getSideLength(),(event.mouseButton.x-view.getXBeginig())/view.getSideLength());
-                    if(event.mouseButton.button==sf::Mouse::Right)
-                        board.toggleFlag((event.mouseButton.y-view.getYBegining())/view.getSideLength(),(event.mouseButton.x-view.getXBeginig())/view.getSideLength());
+                    if(event.mouseButton.button==sf::Mouse::Left) 
+                        board.revealField((event.mouseButton.y - view.getYBegining()) / view.getSideLength(),
+                                          (event.mouseButton.x - view.getXBeginig()) / view.getSideLength());
 
+                    if(event.mouseButton.button==sf::Mouse::Right)
+                        board.toggleFlag((event.mouseButton.y-view.getYBegining())/view.getSideLength(),
+                                         (event.mouseButton.x-view.getXBeginig())/view.getSideLength());
                 }
         }
     }
     window.clear(sf::Color(166, 161, 161));
     view.draw(window);
+
+    //stan gry
+    isGameFinished(window);
     window.display();
+}
+
+void MSSFMLController::isGameFinished(sf::RenderTarget & window) {
+    if(board.getGameState()==FINISHED_LOSS)
+        view.gameOver(window);
+    if(board.getGameState()==FINISHED_WIN)
+        view.congratulations(window);
+
+
 }

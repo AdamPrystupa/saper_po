@@ -17,6 +17,7 @@ class MSSFMLView {
     float yPosition;
     sf::RectangleShape *rectangle;
     sf::Text *minesNearly;
+    sf::Text *announcement;
     sf::Texture bombTexture;
     sf::Texture unrevealedTexture;
     sf::Texture flagTexture;
@@ -32,13 +33,15 @@ class MSSFMLView {
     void drawBoard(sf::RenderTarget & window);
 
 
+
 public:
     MSSFMLView(MinesweeperBoard &board);
     void draw (sf::RenderTarget & window);
     float getXBeginig() const;
     float getYBegining() const;
     float getSideLength() const;
-
+    void gameOver(sf::RenderTarget & window);
+    void congratulations(sf::RenderTarget & window);
 };
 
 

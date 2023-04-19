@@ -6,9 +6,11 @@
 #include "MinesweeperBoard.h"
 
 MSSFMLView::MSSFMLView(MinesweeperBoard &board) : board (board){
+
     this->sideLength=40;
     this->xBegining=(800 - float(board.getBoardWidth() * sideLength)) / 2;
     this->yBegining=(600 - float(board.getBoardHeight() * sideLength)) / 2;
+
 
 };
 
@@ -16,13 +18,16 @@ void MSSFMLView::draw(sf::RenderTarget &target) {
     xPosition = xBegining;
     yPosition = yBegining;
 
+
+
     loadTextures();
     loadFonts();
 
     drawBoard(target);
 
-        return;
-    }
+    return;
+}
+
 
 
 
@@ -164,11 +169,37 @@ void MSSFMLView::drawBoard(sf::RenderTarget & target) {
 
             setFieldsAppearance(row, col);
 
+
             target.draw(*rectangle);
             target.draw(*minesNearly);
+
+
 
 
         }
         yPosition += sideLength;
     }
 }
+
+void MSSFMLView::gameOver(sf::RenderTarget & target) {
+    announcement= new sf::Text  ("GAME OVER", font, 80);
+    announcement->setPosition(200,100);
+    announcement->setFillColor(sf::Color::White);
+    announcement->setOutlineColor(sf::Color::Black);
+    announcement->setOutlineThickness(4.0);
+    target.draw(*announcement);
+
+
+
+}
+
+void MSSFMLView::congratulations(sf::RenderTarget & target) {
+    announcement= new sf::Text  ("CONGRATULATIONS", font, 80);
+    announcement->setPosition(200,100);
+    announcement->setFillColor(sf::Color::White);
+    announcement->setOutlineColor(sf::Color::Black);
+    announcement->setOutlineThickness(4.0);
+    target.draw(*announcement);
+
+
+};
