@@ -7,9 +7,11 @@
 
 MSSFMLView::MSSFMLView(MinesweeperBoard &board) : board (board){
 
-    this->sideLength=40;
+    this->sideLength=30;
     this->xBegining=(800 - float(board.getBoardWidth() * sideLength)) / 2;
     this->yBegining=(600 - float(board.getBoardHeight() * sideLength)) / 2;
+    areLoaded= false;
+    areInitiated = false;
 
 
 };
@@ -18,10 +20,9 @@ void MSSFMLView::draw(sf::RenderTarget &target) {
     xPosition = xBegining;
     yPosition = yBegining;
 
+    if(!areLoaded)
+        filesLoading();
 
-
-    loadTextures();
-    loadFonts();
 
     drawBoard(target);
 
@@ -114,6 +115,12 @@ void MSSFMLView::loadFonts(){
 }
 
 
+void MSSFMLView::filesLoading() {
+    loadTextures();
+    loadFonts();
+    areLoaded= true;
+}
+
 
 
 void MSSFMLView::rectangleInit(int col) {
@@ -129,6 +136,12 @@ void MSSFMLView::minesNearlyInit() {
     minesNearly = new sf::Text("", font, getSideLength() / 1.3);
     minesNearly->setOutlineColor(sf::Color::Black);
     minesNearly->setOutlineThickness(1);
+}
+
+void MSSFMLView::sfInitiation(int col) {
+    rectangleInit(col);
+    minesNearlyInit();
+    areInitiated==true;
 }
 
 void MSSFMLView::setFieldsAppearance(int row,int col) {
@@ -164,26 +177,21 @@ void MSSFMLView::drawBoard(sf::RenderTarget & target) {
 
         for (int col = 0; col < board.getBoardWidth(); col++) {
 
-            rectangleInit(col);
-            minesNearlyInit();
+            if(!areInitiated)
+                sfInitiation(col);
 
             setFieldsAppearance(row, col);
 
-
             target.draw(*rectangle);
             target.draw(*minesNearly);
-
-
-
-
         }
         yPosition += sideLength;
     }
 }
 
 void MSSFMLView::gameOver(sf::RenderTarget & target) {
-    announcement= new sf::Text  ("GAME OVER", font, 80);
-    announcement->setPosition(200,100);
+    announcement= new sf::Text  ("GAME\nOVER!", font, 2*sideLength);
+    announcement->setPosition(xBegining+board.getBoardWidth()*sideLength/2.0-3.5*sideLength,yBegining+board.getBoardHeight()*sideLength/2.0-2.5*sideLength);
     announcement->setFillColor(sf::Color::White);
     announcement->setOutlineColor(sf::Color::Black);
     announcement->setOutlineThickness(4.0);
@@ -194,8 +202,8 @@ void MSSFMLView::gameOver(sf::RenderTarget & target) {
 }
 
 void MSSFMLView::congratulations(sf::RenderTarget & target) {
-    announcement= new sf::Text  ("CONGRATULATIONS", font, 80);
-    announcement->setPosition(200,100);
+    announcement= new sf::Text  ("YOU\nWIN!", font, 2*sideLength);
+    announcement->setPosition(xBegining+board.getBoardWidth()*sideLength/2.0-2.5*sideLength,yBegining+board.getBoardHeight()*sideLength/2.0-2.5*sideLength);
     announcement->setFillColor(sf::Color::White);
     announcement->setOutlineColor(sf::Color::Black);
     announcement->setOutlineThickness(4.0);

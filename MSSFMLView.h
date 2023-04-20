@@ -15,6 +15,8 @@ class MSSFMLView {
     float sideLength;
     float xPosition;
     float yPosition;
+    bool areInitiated;
+    bool areLoaded;
     sf::RectangleShape *rectangle;
     sf::Text *minesNearly;
     sf::Text *announcement;
@@ -31,6 +33,8 @@ class MSSFMLView {
     void loadTextures();
     void loadFonts();
     void drawBoard(sf::RenderTarget & window);
+    void sfInitiation(int col);
+    void filesLoading();
 
 
 

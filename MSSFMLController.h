@@ -20,7 +20,6 @@ class MSSFMLController {
 public:
     MSSFMLController(MinesweeperBoard &board, MSSFMLView &view);
     void play(sf::RenderWindow &window,sf::Event &event);
-
 };
 
 
