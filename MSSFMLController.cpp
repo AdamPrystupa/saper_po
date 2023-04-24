@@ -3,14 +3,16 @@
 //
 
 #include "MSSFMLController.h"
-#include "MinesweeperBoard.h"
-#include "MSSFMLView.h"
+
+
+
 
 MSSFMLController::MSSFMLController(MinesweeperBoard &board, MSSFMLView &view) : board(board), view(view) {}
 
 void MSSFMLController::play(sf::RenderWindow &window,sf::Event &event) {
+
     while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed)
+        if (event.type == sf::Event::Closed )
             window.close();
         {
             if (event.type == sf::Event::MouseButtonPressed)
@@ -26,6 +28,7 @@ void MSSFMLController::play(sf::RenderWindow &window,sf::Event &event) {
                 }
         }
     }
+
     window.clear(sf::Color(166, 161, 161));
     view.draw(window);
     isGameFinished(window);

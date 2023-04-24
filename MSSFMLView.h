@@ -1,7 +1,3 @@
-//
-// Created by Adam on 05.04.2023.
-//
-
 #ifndef SAPER_MSSFMLVIEW_H
 #define SAPER_MSSFMLVIEW_H
 #include "MinesweeperBoard.h"
@@ -46,6 +42,9 @@ public:
     float getSideLength() const;
     void gameOver(sf::RenderTarget & window);
     void congratulations(sf::RenderTarget & window);
+    void setSideLength(sf::RenderTarget & window);
+    void setBoardBeginning(sf::RenderTarget & window);
+
 };
 
 

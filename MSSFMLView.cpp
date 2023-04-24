@@ -1,22 +1,31 @@
-//
-// Created by Adam on 05.04.2023.
-//
-
 #include "MSSFMLView.h"
 #include "MinesweeperBoard.h"
 
 MSSFMLView::MSSFMLView(MinesweeperBoard &board) : board (board){
 
-    this->sideLength=30;
-    this->xBegining=(800 - float(board.getBoardWidth() * sideLength)) / 2;
-    this->yBegining=(600 - float(board.getBoardHeight() * sideLength)) / 2;
+
     areLoaded= false;
     areInitiated = false;
 
 
 };
+void MSSFMLView::setSideLength(sf::RenderTarget & window) {
+    if(board.getBoardWidth()>board.getBoardHeight())
+        this->sideLength=window.getSize().x/board.getBoardWidth();
+    else
+    this->sideLength=window.getSize().y/board.getBoardHeight();
+}
+
+void MSSFMLView::setBoardBeginning(sf::RenderTarget & window) {
+    this->xBegining=(window.getSize().x-float(board.getBoardWidth() * sideLength)) / 2;
+    this->yBegining=(window.getSize().y-float(board.getBoardHeight() * sideLength)) / 2;
+}
+
 
 void MSSFMLView::draw(sf::RenderTarget &target) {
+    setSideLength(target);
+    setBoardBeginning(target);
+
     xPosition = xBegining;
     yPosition = yBegining;
 
@@ -194,7 +203,7 @@ void MSSFMLView::gameOver(sf::RenderTarget & target) {
     announcement->setPosition(xBegining+board.getBoardWidth()*sideLength/2.0-3.5*sideLength,yBegining+board.getBoardHeight()*sideLength/2.0-2.5*sideLength);
     announcement->setFillColor(sf::Color::White);
     announcement->setOutlineColor(sf::Color::Black);
-    announcement->setOutlineThickness(4.0);
+    announcement->setOutlineThickness(5.0);
     target.draw(*announcement);
 
 
@@ -206,7 +215,7 @@ void MSSFMLView::congratulations(sf::RenderTarget & target) {
     announcement->setPosition(xBegining+board.getBoardWidth()*sideLength/2.0-2.5*sideLength,yBegining+board.getBoardHeight()*sideLength/2.0-2.5*sideLength);
     announcement->setFillColor(sf::Color::White);
     announcement->setOutlineColor(sf::Color::Black);
-    announcement->setOutlineThickness(4.0);
+    announcement->setOutlineThickness(5.0);
     target.draw(*announcement);
 
 

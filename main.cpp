@@ -6,12 +6,12 @@
 
 int main() {
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Grafika w C++/SFML");
+    sf::RenderWindow window(sf::VideoMode(800, 800), "Grafika w C++/SFML");
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(30);
 
 
-    MinesweeperBoard board(15,10,EASY);
+    MinesweeperBoard board(14,10,EASY);
     MSSFMLView view (board);  // przekazujemy przez referencję planszę jako argument konstruktora
     MSSFMLController ctrl (board,view);
 
@@ -22,4 +22,3 @@ int main() {
         }
     return 0;
 }
-
