@@ -15,12 +15,13 @@
 class MSSFMLController {
     MinesweeperBoard &board;
     MSSFMLView &view;
-    void isGameFinished(sf::RenderTarget & window);
+    bool isGameFinished(sf::RenderTarget & window);
 
 
 public:
     MSSFMLController(MinesweeperBoard &board, MSSFMLView &view);
-    void play(sf::RenderWindow &window,sf::Event &event);
+    bool play(sf::RenderWindow &window);
+    void mouseHandling(sf::RenderWindow &window,sf::Event &event);
 
 };
 

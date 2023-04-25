@@ -10,15 +10,20 @@ int main() {
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(30);
 
+    bool gameFinished = false;
 
-    MinesweeperBoard board(14,10,EASY);
-    MSSFMLView view (board);  // przekazujemy przez referencję planszę jako argument konstruktora
-    MSSFMLController ctrl (board,view);
+    do {
+        MinesweeperBoard board(10, 10, EASY);
+        MSSFMLView view(board);
+        MSSFMLController ctrl(board, view);
 
 
-    while (window.isOpen()) {
-        sf::Event event;
-        ctrl.play(window,event);
-        }
+            gameFinished=(ctrl.play(window));
+
+
+
+
+    } while (gameFinished);
+
     return 0;
 }

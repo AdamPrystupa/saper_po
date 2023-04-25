@@ -7,40 +7,64 @@
 
 
 
+
 MSSFMLController::MSSFMLController(MinesweeperBoard &board, MSSFMLView &view) : board(board), view(view) {}
 
-void MSSFMLController::play(sf::RenderWindow &window,sf::Event &event) {
+bool MSSFMLController::play(sf::RenderWindow &window) {
 
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed )
-            window.close();
-        {
-            if (event.type == sf::Event::MouseButtonPressed)
-                if(event.type==sf::Event::MouseButtonPressed)
-                {
-                    if(event.mouseButton.button==sf::Mouse::Left)
-                        board.revealField((event.mouseButton.y - view.getYBegining()) / view.getSideLength(),
-                                          (event.mouseButton.x - view.getXBeginig()) / view.getSideLength());
 
-                    if(event.mouseButton.button==sf::Mouse::Right)
-                        board.toggleFlag((event.mouseButton.y-view.getYBegining())/view.getSideLength(),
-                                         (event.mouseButton.x-view.getXBeginig())/view.getSideLength());
-                }
+    bool gameOver = false;
+
+    while (!gameOver && window.isOpen()) {
+        sf::Event event;
+
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+            {
+                mouseHandling(window, event);
+
+            }
         }
+        window.clear(sf::Color(166, 161, 161));
+        view.draw(window);
+        isGameFinished(window);
+        window.display();
+        if (isGameFinished(window))
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+                window.close();
+
+    }
+    return false;
+}
+
+bool MSSFMLController::isGameFinished(sf::RenderTarget & window) {
+    if(board.getGameState()==FINISHED_LOSS)
+    {
+        view.gameOver(window);
+        return true;
     }
 
-    window.clear(sf::Color(166, 161, 161));
-    view.draw(window);
-    isGameFinished(window);
-    window.display();
-}
-
-void MSSFMLController::isGameFinished(sf::RenderTarget & window) {
-    if(board.getGameState()==FINISHED_LOSS)
-        view.gameOver(window);
-    if(board.getGameState()==FINISHED_WIN)
+    if(board.getGameState()==FINISHED_WIN) {
         view.congratulations(window);
-
+        return true;
+    }
+    return false;
 
 }
+
+void MSSFMLController::mouseHandling(sf::RenderWindow &window, sf::Event &event) {
+    if (event.type == sf::Event::MouseButtonPressed)
+        if(event.type==sf::Event::MouseButtonPressed)
+        {
+            if(event.mouseButton.button==sf::Mouse::Left)
+                board.revealField((event.mouseButton.y - view.getYBegining()) / view.getSideLength(),
+                                  (event.mouseButton.x - view.getXBeginig()) / view.getSideLength());
+
+            if(event.mouseButton.button==sf::Mouse::Right)
+                board.toggleFlag((event.mouseButton.y-view.getYBegining())/view.getSideLength(),
+                                 (event.mouseButton.x-view.getXBeginig())/view.getSideLength());
+        }
+}
+
 
