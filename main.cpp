@@ -13,7 +13,7 @@ int main() {
     bool gameFinished = false;
 
     do {
-        MinesweeperBoard board(10, 10, EASY);
+        MinesweeperBoard board(30, 20, EASY);
         MSSFMLView view(board);
         MSSFMLController ctrl(board, view);
 
@@ -23,7 +23,8 @@ int main() {
 
 
 
-    } while (gameFinished);
+    } while (!gameFinished);
+    window.close();
 
     return 0;
 }

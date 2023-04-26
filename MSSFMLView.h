@@ -16,6 +16,7 @@ class MSSFMLView {
     sf::RectangleShape *rectangle;
     sf::Text *minesNearly;
     sf::Text *announcement;
+    sf::Text *menu;
     sf::Texture bombTexture;
     sf::Texture unrevealedTexture;
     sf::Texture flagTexture;
@@ -25,6 +26,7 @@ class MSSFMLView {
     void matchFontColor(sf::Text &minesNearly, sf::RectangleShape &rectangle,int row, int col);
     void setFieldsAppearance(int row,int col);
     void rectangleInit(int col);
+    void menuInit();
     void minesNearlyInit();
     void loadTextures();
     void loadFonts();

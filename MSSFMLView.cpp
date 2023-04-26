@@ -147,11 +147,22 @@ void MSSFMLView::minesNearlyInit() {
     minesNearly->setOutlineThickness(1);
 }
 
+void MSSFMLView::menuInit() {
+    menu = new sf::Text("to replay press ENTER\nto quit press ESCAPE,", font, getSideLength()*0.5);
+    menu->setFillColor(sf::Color::Black);
+    menu->setOutlineThickness(2);
+    menu->setOutlineColor(sf::Color::White);
+
+}
+
 void MSSFMLView::sfInitiation(int col) {
     rectangleInit(col);
     minesNearlyInit();
+    menuInit();
     areInitiated==true;
 }
+
+
 
 void MSSFMLView::setFieldsAppearance(int row,int col) {
     char fieldStatus = board.getFieldInfo(row, col);
@@ -204,7 +215,9 @@ void MSSFMLView::gameOver(sf::RenderTarget & target) {
     announcement->setFillColor(sf::Color::White);
     announcement->setOutlineColor(sf::Color::Black);
     announcement->setOutlineThickness(5.0);
+    menu->setPosition(announcement->getPosition().x-0.5*sideLength,announcement->getPosition().y+4.5*sideLength);
     target.draw(*announcement);
+    target.draw(*menu);
 
 
 
@@ -216,7 +229,9 @@ void MSSFMLView::congratulations(sf::RenderTarget & target) {
     announcement->setFillColor(sf::Color::White);
     announcement->setOutlineColor(sf::Color::Black);
     announcement->setOutlineThickness(5.0);
+    menu->setPosition(announcement->getPosition().x-1.5*sideLength,announcement->getPosition().y+2.5*sideLength);
     target.draw(*announcement);
+    target.draw(*menu);
 
 
 };

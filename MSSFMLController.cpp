@@ -12,7 +12,6 @@ MSSFMLController::MSSFMLController(MinesweeperBoard &board, MSSFMLView &view) : 
 
 bool MSSFMLController::play(sf::RenderWindow &window) {
 
-
     bool gameOver = false;
 
     while (!gameOver && window.isOpen()) {
@@ -20,22 +19,21 @@ bool MSSFMLController::play(sf::RenderWindow &window) {
 
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
-                window.close();
-            {
-                mouseHandling(window, event);
-
-            }
+                return true;
+            mouseHandling(window, event);
+            window.clear(sf::Color(166, 161, 161));
+            view.draw(window);
+            isGameFinished(window);
+            window.display();
+            if (isGameFinished(window))
+                if (event.type == sf::Event::KeyPressed &&
+                    event.key.code == sf::Keyboard::Escape)
+                    return true;
+                if ( event.type == sf::Event::KeyPressed &&
+                    event.key.code == sf::Keyboard::Enter)
+                    return false;
         }
-        window.clear(sf::Color(166, 161, 161));
-        view.draw(window);
-        isGameFinished(window);
-        window.display();
-        if (isGameFinished(window))
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-                window.close();
-
     }
-    return false;
 }
 
 bool MSSFMLController::isGameFinished(sf::RenderTarget & window) {
