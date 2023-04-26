@@ -16,13 +16,7 @@ int main() {
         MinesweeperBoard board(30, 20, EASY);
         MSSFMLView view(board);
         MSSFMLController ctrl(board, view);
-
-
-            gameFinished=(ctrl.play(window));
-
-
-
-
+        gameFinished=(ctrl.play(window));
     } while (!gameFinished);
     window.close();
 

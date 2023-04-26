@@ -13,7 +13,7 @@ void MSSFMLView::setSideLength(sf::RenderTarget & window) {
     if(board.getBoardWidth()>board.getBoardHeight())
         this->sideLength=window.getSize().x/board.getBoardWidth();
     else
-    this->sideLength=window.getSize().y/board.getBoardHeight();
+        this->sideLength=window.getSize().y/board.getBoardHeight();
 }
 
 void MSSFMLView::setBoardBeginning(sf::RenderTarget & window) {
